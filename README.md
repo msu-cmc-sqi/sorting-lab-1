@@ -37,7 +37,7 @@
 ### 2) Склонируйте свой форк
 
 ```bash
-git clone https://github.com/<your-lastname>/sorting-lab-1.git
+git clone https://github.com/<your-username>/sorting-lab-1.git
 cd sorting-lab-1
 ```
 
