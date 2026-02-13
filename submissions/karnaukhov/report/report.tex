@@ -1,0 +1,134 @@
+\documentclass[a4paper,12pt,titlepage,finall]{article}
+
+\usepackage[T1,T2A]{fontenc}     
+\usepackage[utf8x]{inputenc}     
+\usepackage[russian]{babel}      
+\usepackage{tikz}                
+\usepackage{pgfplots}            
+\usepackage{geometry}		 
+\usepackage{indentfirst}         
+\usepackage{multirow}            
+
+\geometry{a4paper,left=30mm,top=30mm,bottom=30mm,right=30mm}
+
+\setcounter{secnumdepth}{0}      
+\usepgfplotslibrary{fillbetween} 
+
+\begin{document}
+
+% Титульный лист
+\begin{titlepage}
+    \begin{center}
+	{\small \sc Московский государственный университет \\имени М.~В.~Ломоносова\\
+	Факультет вычислительной математики и кибернетики\\}
+	\vfill
+	{\Large \sc Отчет по заданию №1}\\
+	~\\
+	{\large \bf <<Методы сортировки>>}\\ 
+	~\\
+	{\large \bf Вариант 6}
+    \end{center}
+    \begin{flushright}
+	\vfill {Выполнил:\\
+	студент 104 группы\\
+	Карнаухов~М.~А.\\
+	~\\
+	Преподаватель:\\
+	Гуляев~Д.~А.}
+    \end{flushright}
+    \begin{center}
+	\vfill
+	{\small Москва\\2026}
+    \end{center}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Постановка задачи}
+
+В данной работе требуется реализовать два метода сортировки массива чисел и провести их экспериментальное сравнение. Сравниваются следующие алгоритмы:
+\begin{itemize}
+    \item Insertion Sort (сортировка вставками)
+    \item Merge Sort (сортировка слиянием)
+\end{itemize}
+Элементы массивов — целые числа. Сортировка проводится по возрастанию.
+
+\newpage
+
+\section{Результаты экспериментов}
+
+Для оценки эффективности алгоритмов измерялось количество сравнений элементов и количество перемещений для каждого алгоритма. Эксперимент проводился на массивах трёх типов:
+\begin{itemize}
+    \item случайный массив,
+    \item отсортированный массив,
+    \item обратно отсортированный массив.
+\end{itemize}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{n} & \textbf{Type} & \textbf{Ins. Moves} & \textbf{Ins. Comps} & \textbf{Merge Moves} & \textbf{Merge Comps} \\
+\hline
+\multirow{3}{*}{10} & Random & 43 & 29 & 68 & 23 \\
+                     & Sorted & 18 & 9  & 68 & 19 \\
+                     & Reverse& 63 & 45 & 68 & 15 \\
+\hline
+\multirow{3}{*}{100} & Random & 2\,483 & 2\,382 & 1\,344 & 547 \\
+                      & Sorted & 198    & 99    & 1\,344 & 356 \\
+                      & Reverse& 5\,148 & 4\,950 & 1\,344 & 316 \\
+\hline
+\multirow{3}{*}{1000} & Random & 252\,372 & 251\,370 & 19\,952 & 8\,696 \\
+                       & Sorted & 1\,998  & 999      & 19\,952 & 5\,044 \\
+                       & Reverse& 501\,498 & 499\,500 & 19\,952 & 4\,932 \\
+\hline
+\multirow{3}{*}{10000} & Random & 25\,011\,026 & 25\,001\,022 & 267\,232 & 120\,363 \\
+                        & Sorted & 19\,998       & 9\,999        & 267\,232 & 69\,008  \\
+                        & Reverse& 50\,014\,998  & 49\,995\,000   & 267\,232 & 64\,608  \\
+\hline
+\end{tabular}
+\caption{Результаты работы сортировок Insertion Sort и Merge Sort для различных размеров массивов}
+\end{table}
+
+\subsection{Анализ результатов}
+
+\begin{itemize}
+    \item Insertion Sort демонстрирует квадратичную зависимость операций от размера массива. На случайных и обратно отсортированных массивах количество сравнений и перемещений растет почти пропорционально $O(n^2)$. На отсортированном массиве количество операций минимально, что соответствует лучшему случаю $O(n)$.
+    \item Merge Sort показывает почти одинаковое количество операций на всех типах массивов, что подтверждает теоретическую оценку $O(n \log n)$.
+    \item Сравнение показывает, что Merge Sort эффективнее на больших массивах, а Insertion Sort может быть применим для маленьких или почти отсортированных массивов.
+\end{itemize}
+
+\newpage
+
+\section{Структура программы и спецификация функций}
+
+Программа включает следующие функции:
+
+\begin{itemize}
+    \item \texttt{void insertionSort(int n, int a[])} — сортировка массива вставками, подсчет сравнений и перемещений.
+    \item \texttt{void mergeSort(int arr[], int left, int right)} — сортировка массива слиянием, подсчет сравнений и перемещений.
+    \item \texttt{void merge(int arr[], int left, int mid, int right)} — вспомогательная функция для слияния подмассивов.
+    \item \texttt{void generateRandom(int arr[], int n, int maxVal)} — генерация случайного массива.
+    \item \texttt{void generateSorted(int arr[], int n)} — генерация уже отсортированного массива.
+    \item \texttt{void generateReverse(int arr[], int n)} — генерация обратно отсортированного массива.
+\end{itemize}
+
+\newpage
+
+\section{Отладка программы, тестирование функций}
+
+Тестирование проводилось на трёх типах массивов: случайный, отсортированный и обратно отсортированный. Для каждого теста проверялась корректность сортировки и фиксировались показатели сравнений и перемещений.
+
+\newpage
+
+\section{Анализ допущенных ошибок}
+
+На этапе отладки были выявлены следующие моменты:
+\begin{itemize}
+    \item Ошибки при подсчете копирований в функции merge — исправлены.
+    \item Некорректная индексация подмассивов при слиянии — исправлена.
+    \item Проверка работы алгоритмов на различных типах массивов позволила убедиться в корректности подсчета операций.
+\end{itemize}
+
+\end{document}
