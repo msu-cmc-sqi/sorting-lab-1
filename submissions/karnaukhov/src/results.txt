@@ -1,0 +1,4 @@
+Type			Ins. Moves			Ins. Comps			Merge Moves			Merge Comps
+Random			252372			251370			19952				8696
+Sorted			1998				999				19952				5044
+Reverse			501498			499500			19952				4932
